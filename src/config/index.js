@@ -5,15 +5,16 @@ const envConfig = {
     baseApi: "localhost:3000",
     mockApi:
       "https://www.fastmock.site/mock/2dde45eab068a910c2b579b56daae095/api",
+    mock: true,
   },
   production: {
     baseApi: "/",
     mockApi: "/",
+    mock: false,
   },
 };
 
 export default {
   env,
-  mock: true,
   ...envConfig[env],
 };

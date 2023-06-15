@@ -15,6 +15,17 @@ export default {
       });
     },
   },
+  mounted() {
+    // this.$request({
+    //   url: "/login",
+    //   method: "get",
+    // }).then((response) => {
+    //   console.log(response);
+    // });
+    this.$request.get("/login").then((response) => {
+      console.log(response);
+    });
+  },
 };
 </script>
 
