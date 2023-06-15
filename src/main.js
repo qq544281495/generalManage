@@ -1,5 +1,15 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
+import config from "./config";
+import axios from "axios";
 
-createApp(App).mount('#app')
+axios.get(config.mockApi + "/login").then((res) => {
+  console.log(res);
+});
+
+const app = createApp(App);
+
+app.use(router).use(ElementPlus).mount("#app");
