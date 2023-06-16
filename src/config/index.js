@@ -17,4 +17,5 @@ const envConfig = {
 export default {
   env,
   ...envConfig[env],
+  namespace: "manage",
 };

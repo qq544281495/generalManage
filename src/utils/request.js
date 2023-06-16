@@ -52,9 +52,9 @@ function request(options) {
     options.params = options.data;
   }
   if (config.env === "production") {
-    service.defaults.baseURL = config.baseURL;
+    service.defaults.baseURL = config.baseApi;
   } else {
-    service.defaults.baseURL = config.mock ? config.mockApi : config.baseURL;
+    service.defaults.baseURL = config.mock ? config.mockApi : config.baseApi;
   }
   return service(options);
 }
