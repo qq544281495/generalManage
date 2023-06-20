@@ -25,7 +25,7 @@ service.interceptors.response.use(
     const { code, data, message } = response.data;
     if (code === 200) {
       return data;
-    } else if (code === 401) {
+    } else if (code === 50001) {
       ElMessage.error(TOKEN_ERROR);
       setTimeout(() => {
         router.push({
@@ -54,7 +54,8 @@ function request(options) {
   if (config.env === "production") {
     service.defaults.baseURL = config.baseApi;
   } else {
-    service.defaults.baseURL = config.mock ? config.mockApi : config.baseApi;
+    const mock = typeof options.mock === undefined ? config.mock : options.mock;
+    service.defaults.baseURL = mock ? config.mockApi : config.baseApi;
   }
   return service(options);
 }
