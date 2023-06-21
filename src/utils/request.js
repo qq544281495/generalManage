@@ -1,8 +1,9 @@
 // axios封装
 import axios from "axios";
-import config from "../config";
+import config from "@/config";
 import { ElMessage } from "element-plus";
-import router from "../router";
+import router from "@/router";
+import storage from "./storage";
 
 // 定义请求错误常量
 const TOKEN_ERROR = "身份认证失败，请重新登录";
@@ -16,6 +17,9 @@ const service = axios.create({
 
 // 请求拦截器
 service.interceptors.request.use((request) => {
+  const headers = request.headers;
+  const token = storage.getItem("userInfo").token || "";
+  if (!headers.Authorization) headers.Authorization = "Bearer " + token;
   return request;
 });
 

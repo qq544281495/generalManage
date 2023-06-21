@@ -1,4 +1,4 @@
-import storage from "../utils/storage";
+import storage from "@/utils/storage";
 export default {
   namespaced: true,
   state: () => ({

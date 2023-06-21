@@ -9,28 +9,13 @@
       <!-- 导航菜单 -->
       <el-menu
         background-color="#001529"
-        default-active="1"
+        :default-active="activeMenu"
         text-color="#fff"
         :collapse="isCollapse"
         class="nav-menu"
         router
       >
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon><Setting /></el-icon>
-            <span>系统管理</span>
-          </template>
-          <el-menu-item index="1-1">用户管理</el-menu-item>
-          <el-menu-item index="1-2">菜单管理管理</el-menu-item>
-        </el-sub-menu>
-        <el-sub-menu index="2">
-          <template #title>
-            <el-icon><Setting /></el-icon>
-            <span>审批管理</span>
-          </template>
-          <el-menu-item index="2-1">休假审批</el-menu-item>
-          <el-menu-item index="2-2">待审批</el-menu-item>
-        </el-sub-menu>
+        <MenuComponent :menu="menuList" />
       </el-menu>
     </div>
     <div :class="['page-content', isCollapse ? 'fold' : 'nofold']">
@@ -39,21 +24,21 @@
           <div class="menu-fold" @click="toggle">
             <el-icon size="20px"><Fold /></el-icon>
           </div>
-          <div>面包屑</div>
+          <BreadCrumb />
         </div>
         <div>
           <!-- 消息通知 -->
-          <el-badge is-dot class="bell">
+          <el-badge :is-dot="noticeCount != 0" class="bell">
             <el-icon size="20px"><Bell /></el-icon>
           </el-badge>
           <!-- 用户信息 -->
           <el-popover placement="bottom" trigger="hover" :width="240">
             <template #reference>
-              <span style="color: #409eff">{{ userInfo.username }}</span>
+              <span style="color: #409eff">{{ userInfo.userName }}</span>
             </template>
             <div style="display: flex; margin-bottom: 2px">
               <div style="width: 60px">用户名：</div>
-              <div>{{ userInfo.username }}</div>
+              <div>{{ userInfo.userName }}</div>
             </div>
             <div style="display: flex; margin-bottom: 2px">
               <div style="width: 60px">邮箱：</div>
@@ -78,26 +63,40 @@
 </template>
 
 <script>
+import MenuComponent from "@/components/MenuComponent.vue";
+import BreadCrumb from "@/components/BreadCrumb.vue";
 export default {
   name: "home",
+  components: { MenuComponent, BreadCrumb },
   data() {
     return {
       isCollapse: false,
-      userInfo: {
-        username: "Jack",
-        userEmail: "JackEmail@admin.com",
-      },
+      userInfo: this.$store.state.user.userInfo,
+      noticeCount: 0,
+      menuList: [],
+      activeMenu: location.hash.slice(1),
     };
   },
   methods: {
+    async getMenuList() {
+      const list = await this.$api.getMenuList();
+      this.menuList = list;
+    },
+    async getNoticeCount() {
+      const count = await this.$api.noticeCount();
+      this.noticeCount = count;
+    },
     toggle() {
       this.isCollapse = !this.isCollapse;
     },
     logout() {
       this.$store.commit("user/SET_USER_INFO", "");
-      this.userInfo = null;
       this.$router.push({ path: "/login" });
     },
+  },
+  mounted() {
+    this.getNoticeCount();
+    this.getMenuList();
   },
 };
 </script>
@@ -160,7 +159,6 @@ export default {
         .menu-fold {
           display: flex;
           align-items: center;
-          padding-top: 1px;
           margin-right: 10px;
         }
       }

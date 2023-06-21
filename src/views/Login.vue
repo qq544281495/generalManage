@@ -3,13 +3,13 @@
     <div class="content">
       <el-form ref="userForm" :model="user" status-icon :rules="rules">
         <div class="title">通用后台管理系统</div>
-        <el-form-item prop="username">
+        <el-form-item prop="userName">
           <el-input
             type="text"
             size="large"
             prefix-icon="User"
             placeholder="请输入账号"
-            v-model="user.username"
+            v-model="user.userName"
           />
         </el-form-item>
         <el-form-item prop="password">
@@ -41,11 +41,11 @@ export default {
   data() {
     return {
       user: {
-        username: "",
+        userName: "",
         password: "",
       },
       rules: {
-        username: [
+        userName: [
           {
             required: true,
             message: "请输入账号",
