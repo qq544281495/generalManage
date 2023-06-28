@@ -1,5 +1,5 @@
 <template>
-  <el-breadcrumb :separator-icon="ArrowRight">
+  <el-breadcrumb>
     <el-breadcrumb-item
       v-for="item of breadList"
       :key="item.path"

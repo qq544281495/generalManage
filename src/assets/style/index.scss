@@ -59,23 +59,25 @@ a {
 /*
 * 公共样式
 */
-.query-form {
+.query-from {
+  flex-grow: 0;
+  padding: 20px 20px 0px;
   background-color: #ffffff;
-  padding: 22px 20px 0;
-  border-radius: 5px;
+  margin-bottom: 10px;
 }
 .base-table {
-  border-radius: 5px;
-  background: #ffffff;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  flex-grow: 1;
+  width: 100%;
+  background-color: #ffffff;
+
   .action {
-    border-radius: 5px 5px 0px 0px;
-    background: #ffffff;
     padding: 20px;
-    border-bottom: 1px solid #ece8e8;
+    border-bottom: 1px solid #eeeeee;
   }
+
   .pagination {
+    display: flex;
+    justify-content: end;
     text-align: right;
     padding: 10px;
   }

@@ -24,6 +24,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
+  background-color: #ffffff;
   .content {
     .sub-title {
       font-size: 30px;
