@@ -1,5 +1,5 @@
 /**
- * 用户操作接口
+ * 用户接口
  */
 import request from "@/utils/request";
 export default {

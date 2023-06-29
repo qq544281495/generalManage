@@ -155,7 +155,7 @@
 <script>
 import utils from "@/utils/utils";
 export default {
-  name: "user",
+  name: "User",
   data() {
     return {
       userData: [],
@@ -186,7 +186,7 @@ export default {
         {
           label: "用户邮箱",
           prop: "userEmail",
-          width: "200px",
+          width: "160px",
         },
         {
           label: "用户角色",
@@ -213,11 +213,12 @@ export default {
         {
           label: "职位",
           prop: "job",
+          width: "100px",
         },
         {
           label: "注册时间",
           prop: "createTime",
-          width: "220px",
+          width: "200px",
           formatter(row, column, value) {
             return utils.formateDate(new Date(value));
           },
@@ -225,7 +226,7 @@ export default {
         {
           label: "最后登录时间",
           prop: "lastLoginTime",
-          width: "220px",
+          width: "200px",
           formatter(row, column, value) {
             return utils.formateDate(new Date(value));
           },

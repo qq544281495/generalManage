@@ -2,7 +2,7 @@ import storage from "@/utils/storage";
 export default {
   namespaced: true,
   state: () => ({
-    userInfo: "" || storage.getItem("userInfo"),
+    userInfo: { userName: "", userEmail: "" } || storage.getItem("userInfo"),
   }),
   getters: {
     GET_USER_INFO(state) {

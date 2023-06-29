@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
   {
-    name: "home",
+    name: "Home",
     path: "/",
     component: () => import("@/layout/Home.vue"),
     redirect: "/welcome",
@@ -11,7 +11,7 @@ const routes = [
     },
     children: [
       {
-        name: "welcome",
+        name: "Welcome",
         path: "welcome",
         component: () => import("@/views/Welcome.vue"),
         meta: {
@@ -19,17 +19,25 @@ const routes = [
         },
       },
       {
-        name: "user",
+        name: "User",
         path: "system/user",
         component: () => import("@/views/User.vue"),
         meta: {
           title: "用户管理",
         },
       },
+      {
+        name: "Menu",
+        path: "system/menu",
+        component: () => import("@/views/Menu.vue"),
+        meta: {
+          title: "菜单管理",
+        },
+      },
     ],
   },
   {
-    name: "login",
+    name: "Login",
     path: "/login",
     component: () => import("@/views/Login.vue"),
     meta: {

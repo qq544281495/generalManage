@@ -66,7 +66,7 @@
 import MenuComponent from "@/components/MenuComponent.vue";
 import BreadCrumb from "@/components/BreadCrumb.vue";
 export default {
-  name: "home",
+  name: "handleBatchDeleteome",
   components: { MenuComponent, BreadCrumb },
   data() {
     return {

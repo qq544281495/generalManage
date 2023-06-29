@@ -1,5 +1,6 @@
 import request from "@/utils/request";
 import userPort from "./user";
+import menuPort from "./menu";
 export default {
   // 登录接口
   login(data) {
@@ -13,13 +14,10 @@ export default {
   getDeptList(data) {
     return request.get("/dept/list", data);
   },
-  // 菜单列表
-  getMenuList(data) {
-    return request.get("/menu/list", data);
-  },
   // 获取系统角色列表
   getRoleList(data) {
     return request.get("/roles/allList", data);
   },
   ...userPort,
+  ...menuPort,
 };
