@@ -273,8 +273,12 @@ export default {
   },
   methods: {
     async getMenuList() {
-      let list = await this.$api.getMenuList(this.queryForm);
-      this.menuList = list;
+      try {
+        let list = await this.$api.getMenuList(this.queryForm);
+        this.menuList = list;
+      } catch (error) {
+        throw new Error(error);
+      }
     },
     handleQuery() {
       this.getMenuList();
@@ -301,22 +305,29 @@ export default {
       });
     },
     async handleDelete(_id) {
-      this.action = "delete";
-      let params = { action: this.action, _id };
-      await this.$api.operateMenu(params);
-      this.$message.success("菜单删除成功");
-      this.getMenuList();
+      try {
+        this.action = "delete";
+        let params = { action: this.action, _id };
+        await this.$api.operateMenu(params);
+        this.$message.success("菜单删除成功");
+        this.getMenuList();
+      } catch (error) {
+        throw new Error(error);
+      }
     },
     handleConfirm() {
       this.$refs.dialog.validate(async (valid) => {
         if (valid) {
-          let { action, menuForm } = this;
-          let params = { ...menuForm, action };
-          let { info } = await this.$api.operateMenu(params);
-          this.$message.success(info);
-          this.$refs["dialog"].resetFields();
-          this.menuDialog = false;
-          this.getMenuList();
+          try {
+            let { action, menuForm } = this;
+            let params = { ...menuForm, action };
+            let { info } = await this.$api.operateMenu(params);
+            this.$message.success(info);
+            this.handleCancel();
+            this.getMenuList();
+          } catch (error) {
+            throw new Error(error);
+          }
         } else {
           return false;
         }

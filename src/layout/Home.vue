@@ -79,12 +79,20 @@ export default {
   },
   methods: {
     async getMenuList() {
-      const list = await this.$api.getMenuList();
-      this.menuList = list;
+      try {
+        const list = await this.$api.getMenuList();
+        this.menuList = list;
+      } catch (error) {
+        throw new Error(error);
+      }
     },
     async getNoticeCount() {
-      const count = await this.$api.noticeCount();
-      this.noticeCount = count;
+      try {
+        const count = await this.$api.noticeCount();
+        this.noticeCount = count;
+      } catch (error) {
+        throw new Error(error);
+      }
     },
     toggle() {
       this.isCollapse = !this.isCollapse;

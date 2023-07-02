@@ -165,7 +165,7 @@ export default {
       userDialog: false,
       operate: "add",
       page: {
-        total: 20,
+        total: 0,
         pageSize: 10,
         pageNumber: 1,
       },
@@ -302,18 +302,22 @@ export default {
     handleOperateUser() {
       this.$refs.dialogForm.validate(async (valid) => {
         if (valid) {
-          let data = {
-            action: this.operate,
-            ...this.userForm,
-          };
-          let res = await this.$api.operateUser(data);
-          if (res) {
-            let message =
-              this.operate === "add" ? "添加用户成功" : "编辑用户成功";
-            this.$message.success(message);
-            this.getUserList();
+          try {
+            let data = {
+              action: this.operate,
+              ...this.userForm,
+            };
+            let res = await this.$api.operateUser(data);
+            if (res) {
+              let message =
+                this.operate === "add" ? "添加用户成功" : "编辑用户成功";
+              this.$message.success(message);
+              this.getUserList();
+            }
+            this.handleCancel();
+          } catch (error) {
+            throw new Error(error);
           }
-          this.handleCancel();
         } else {
           return false;
         }
@@ -331,10 +335,14 @@ export default {
     },
     // 获取用户列表
     async getUserList() {
-      let params = { ...this.userQuery, ...this.page };
-      const { page, list } = await this.$api.getUserList(params);
-      this.page.total = page.total;
-      this.userData = list;
+      try {
+        let params = { ...this.userQuery, ...this.page };
+        const { page, list } = await this.$api.getUserList(params);
+        this.page.total = page.total;
+        this.userData = list;
+      } catch (error) {
+        throw new Error(error);
+      }
     },
     // 查询
     handleQuery() {
@@ -364,51 +372,67 @@ export default {
     },
     // 删除用户
     async handleDelete(value) {
-      let params = {
-        userIds: [value.userId],
-      };
-      let { nModified } = await this.$api.deleteUser(params);
-      if (nModified >= 1) {
-        this.$message.success("用户删除成功");
-        this.getUserList();
-      } else {
-        this.$message.error("删除失败，请稍后重试");
-      }
-    },
-    // 批量删除用户
-    async handleBatchDelete() {
-      if (this.selectUsers.length > 0) {
+      try {
         let params = {
-          userIds: [],
+          userIds: [value.userId],
         };
-        this.selectUsers.map((item) => {
-          params.userIds.push(item.userId);
-        });
         let { nModified } = await this.$api.deleteUser(params);
         if (nModified >= 1) {
-          this.$message.success(`用户删除成功，共删除${nModified}条用户数据`);
+          this.$message.success("用户删除成功");
           this.getUserList();
         } else {
           this.$message.error("删除失败，请稍后重试");
         }
-      } else {
-        this.$message.warning("请选择需要删除的用户");
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    // 批量删除用户
+    async handleBatchDelete() {
+      try {
+        if (this.selectUsers.length > 0) {
+          let params = {
+            userIds: [],
+          };
+          this.selectUsers.map((item) => {
+            params.userIds.push(item.userId);
+          });
+          let { nModified } = await this.$api.deleteUser(params);
+          if (nModified >= 1) {
+            this.$message.success(`用户删除成功，共删除${nModified}条用户数据`);
+            this.getUserList();
+          } else {
+            this.$message.error("删除失败，请稍后重试");
+          }
+        } else {
+          this.$message.warning("请选择需要删除的用户");
+        }
+      } catch (error) {
+        throw new Error(error);
       }
     },
     // 获取角色列表
-    async getRoleList() {
-      let { list } = await this.$api.getRoleList();
-      this.roleList = list;
+    async getAllRoleList() {
+      try {
+        let { list } = await this.$api.getAllRoleList();
+        this.roleList = list;
+      } catch (error) {
+        throw new Error(error);
+      }
     },
     // 获取部门列表
     async getDeptList() {
-      let { list } = await this.$api.getDeptList();
-      this.deptList = list;
+      try {
+        let { list } = await this.$api.getDeptList();
+        this.deptList = list;
+      } catch (error) {
+        throw new Error(error);
+      }
     },
   },
   mounted() {
     this.getUserList();
-    this.getRoleList();
+    this.getAllRoleList();
     this.getDeptList();
   },
 };
