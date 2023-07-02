@@ -3,6 +3,10 @@
  */
 import request from "@/utils/request";
 export default {
+  // 登录接口
+  login(data) {
+    return request.post("/users/login", data);
+  },
   // 获取用户列表
   getUserList(data) {
     return request.get("/users/list", data);

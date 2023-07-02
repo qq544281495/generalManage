@@ -5,7 +5,7 @@ import request from "@/utils/request";
 export default {
   // 获取系统角色列表
   getAllRoleList(data) {
-    return request.get("/roles/allList", data, { mock: true });
+    return request.get("/roles/allList", data);
   },
   // 获取角色列表
   getRoleList(data) {
