@@ -67,7 +67,7 @@ export default {
       try {
         this.$refs.userForm.validate(async (valid) => {
           if (valid) {
-            let data = await this.$api.login(this.user);
+            let { data } = await this.$api.login(this.user);
             this.$store.commit("user/SET_USER_INFO", data);
             this.$router.push({ path: "/welcome" });
           } else {

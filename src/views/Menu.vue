@@ -58,7 +58,7 @@
     </div>
     <el-dialog
       v-model="menuDialog"
-      title="新增菜单"
+      :title="dialogTitle"
       width="600px"
       :close-on-click-modal="false"
       @close="handleCancel"
@@ -74,7 +74,7 @@
         <el-form-item label="父级菜单:" prop="parentId">
           <el-cascader
             v-model="menuForm.parentId"
-            :options="menuList"
+            :options="treeList"
             :props="{ value: '_id', label: 'menuName', checkStrictly: true }"
             placeholder="请选择父级菜单"
             clearable
@@ -174,6 +174,8 @@ export default {
   data() {
     return {
       menuList: [],
+      treeList: [],
+      dialogTitle: "",
       action: "",
       menuDialog: false,
       columns: [
@@ -274,8 +276,16 @@ export default {
   methods: {
     async getMenuList() {
       try {
-        let list = await this.$api.getMenuList(this.queryForm);
+        let { list } = await this.$api.getMenuList(this.queryForm);
         this.menuList = list;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    async getTreeList() {
+      try {
+        let { list } = await this.$api.getMenuList();
+        this.treeList = list;
       } catch (error) {
         throw new Error(error);
       }
@@ -288,10 +298,12 @@ export default {
     },
     handleCreate() {
       this.action = "create";
+      this.dialogTitle = "新增菜单";
       this.menuDialog = true;
     },
     handleAdd(value) {
       this.action = "create";
+      this.dialogTitle = "新增菜单";
       this.menuForm.parentId = [...value.parentId, value._id].filter(
         (item) => item
       );
@@ -299,6 +311,7 @@ export default {
     },
     handleEdit(value) {
       this.action = "edit";
+      this.dialogTitle = "编辑菜单";
       this.menuDialog = true;
       this.$nextTick(() => {
         Object.assign(this.menuForm, value);
@@ -308,8 +321,8 @@ export default {
       try {
         this.action = "delete";
         let params = { action: this.action, _id };
-        await this.$api.operateMenu(params);
-        this.$message.success("菜单删除成功");
+        let { info } = await this.$api.operateMenu(params);
+        this.$message.success(info);
         this.getMenuList();
       } catch (error) {
         throw new Error(error);
@@ -334,21 +347,16 @@ export default {
       });
     },
     handleCancel() {
+      this.dialogTitle = "";
       this.menuDialog = false;
       this.$refs["dialog"].resetFields();
     },
   },
   mounted() {
     this.getMenuList();
+    this.getTreeList();
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.user-manage {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-</style>
+<style lang="scss" scoped></style>

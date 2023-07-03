@@ -58,7 +58,7 @@
     <!-- 创建角色弹窗 -->
     <el-dialog
       v-model="operateDialog"
-      title="创建角色"
+      :title="operateTitle"
       width="600px"
       :close-on-click-modal="false"
       @close="handleCancel"
@@ -94,7 +94,7 @@
     <!-- 编辑权限弹窗 -->
     <el-dialog
       v-model="privilegeDialog"
-      title="创建角色"
+      title="设置权限"
       width="600px"
       :close-on-click-modal="false"
       @close="handleCancelPrivilege"
@@ -140,6 +140,7 @@ export default {
   data() {
     return {
       action: "",
+      operateTitle: "",
       actionMap: {},
       operateDialog: false,
       privilegeDialog: false,
@@ -206,7 +207,7 @@ export default {
   methods: {
     async getMenuList() {
       try {
-        let list = await this.$api.getMenuList();
+        let { list } = await this.$api.getMenuList();
         this.menuList = list;
         let mapList = JSON.parse(JSON.stringify(list));
         this.getActionMap(mapList);
@@ -247,6 +248,7 @@ export default {
 
     handleCreate() {
       this.action = "create";
+      this.operateTitle = "创建角色";
       this.operateDialog = true;
     },
     handleOpenPrivilege(value) {
@@ -261,6 +263,7 @@ export default {
     },
     handleEdit(value) {
       this.action = "edit";
+      this.operateTitle = "编辑角色";
       this.operateDialog = true;
       this.$nextTick(() => {
         Object.assign(this.operateForm, value);
@@ -268,6 +271,7 @@ export default {
     },
     handleCancel() {
       this.$refs["operateForm"].resetFields();
+      this.operateTitle = "";
       this.operateDialog = false;
     },
     async handleSubmitPrivilege() {
@@ -354,11 +358,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.user-manage {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-</style>
+<style lang="scss" scoped></style>

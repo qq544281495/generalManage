@@ -80,7 +80,7 @@ export default {
   methods: {
     async getMenuList() {
       try {
-        const list = await this.$api.getMenuList();
+        const { list } = await this.$api.getMenuList();
         this.menuList = list;
       } catch (error) {
         throw new Error(error);

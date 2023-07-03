@@ -72,7 +72,7 @@
     </div>
     <el-dialog
       v-model="userDialog"
-      title="新增用户"
+      :title="dialogTitle"
       width="600px"
       :close-on-click-modal="false"
       @close="handleCancel"
@@ -164,6 +164,7 @@ export default {
       deptList: [],
       userDialog: false,
       operate: "add",
+      dialogTitle: "",
       page: {
         total: 0,
         pageSize: 10,
@@ -307,13 +308,9 @@ export default {
               action: this.operate,
               ...this.userForm,
             };
-            let res = await this.$api.operateUser(data);
-            if (res) {
-              let message =
-                this.operate === "add" ? "添加用户成功" : "编辑用户成功";
-              this.$message.success(message);
-              this.getUserList();
-            }
+            let { info } = await this.$api.operateUser(data);
+            this.$message.success(info);
+            this.getUserList();
             this.handleCancel();
           } catch (error) {
             throw new Error(error);
@@ -325,11 +322,13 @@ export default {
     },
     // 关闭用户弹窗
     handleCancel() {
+      this.dialogTitle = "";
       this.userDialog = false;
       this.$refs["dialogForm"].resetFields();
     },
     // 新增用户弹窗
     handleCreate() {
+      this.dialogTitle = "新增用户";
       this.operate = "add";
       this.userDialog = true;
     },
@@ -363,6 +362,7 @@ export default {
     },
     // 编辑用户
     handleEdit(value) {
+      this.dialogTitle = "编辑用户";
       this.operate = "edit";
       this.userDialog = true;
       // 使用$nextTick等弹窗渲染完毕后赋值，避免赋值被当作初始值
@@ -438,11 +438,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.user-manage {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-</style>
+<style lang="scss" scoped></style>
