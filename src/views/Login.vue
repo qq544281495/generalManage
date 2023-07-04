@@ -36,6 +36,9 @@
 </template>
 
 <script>
+import storage from "@/utils/storage";
+import utils from "@/utils/utils";
+const modules = import.meta.glob("../views/*.vue");
 export default {
   name: "Login",
   data() {
@@ -69,6 +72,7 @@ export default {
           if (valid) {
             let { data } = await this.$api.login(this.user);
             this.$store.commit("user/SET_USER_INFO", data);
+            await this.loadRoutes();
             this.$router.push({ path: "/welcome" });
           } else {
             return false;
@@ -76,6 +80,22 @@ export default {
         });
       } catch (error) {
         throw new Error(error);
+      }
+    },
+    async loadRoutes() {
+      let userInfo = storage.getItem("userInfo") || {};
+      if (userInfo.token) {
+        try {
+          let { list } = await this.$api.getPermissionList();
+          let routes = utils.getPermissionRoute(list);
+          routes.map((item) => {
+            let url = `./${item.component}.vue`;
+            item.component = modules[url];
+            this.$router.addRoute("Home", item);
+          });
+        } catch (error) {
+          throw new Error(error);
+        }
       }
     },
   },

@@ -29,4 +29,27 @@ export default {
     }
     return fmt;
   },
+  getPermissionRoute(list) {
+    let routes = [];
+    const deep = (array) => {
+      while (array.length) {
+        let item = array.pop();
+        if (item.action) {
+          routes.push({
+            name: item.component,
+            path: item.path,
+            component: item.component,
+            meta: {
+              title: item.menuName,
+            },
+          });
+        }
+        if (item.children && !item.action) {
+          deep(item.children);
+        }
+      }
+    };
+    deep(list);
+    return routes;
+  },
 };
