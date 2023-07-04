@@ -6,13 +6,20 @@
         <el-input v-model="queryForm.deptName" placeholder="请输入部门名称" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="handleQuery">查询</el-button>
-        <el-button @click="handleReset">重置</el-button>
+        <el-button v-limit="'/dept/query'" type="primary" @click="handleQuery"
+          >查询</el-button
+        >
+        <el-button v-limit="'/dept/query'" @click="handleReset">重置</el-button>
       </el-form-item>
     </el-form>
     <div class="base-table">
       <div class="action">
-        <el-button type="primary" @click="handleOpenDialog">创建</el-button>
+        <el-button
+          v-limit="'/dept/create'"
+          type="primary"
+          @click="handleOpenDialog"
+          >新增</el-button
+        >
       </div>
       <el-table
         :data="deptList"
@@ -31,12 +38,14 @@
         <el-table-column label="操作">
           <template #default="scope">
             <el-button
+              v-limit="'/dept/edit'"
               type="primary"
               size="small"
               @click="handleEdit(scope.row)"
               >编辑</el-button
             >
             <el-button
+              v-limit="'/dept/delete'"
               type="danger"
               size="small"
               @click="handleDelete(scope.row._id)"
@@ -225,6 +234,7 @@ export default {
             let { info } = await this.$api.operateDept(params);
             this.$message.success(info);
             this.getDeptList();
+            this.getTreeDeptList();
             this.handleClose();
           } catch (error) {
             throw new Error(error);
@@ -260,6 +270,7 @@ export default {
         let { info } = await this.$api.operateDept(params);
         this.$message.success(info);
         this.getDeptList();
+        this.getTreeDeptList();
       } catch (error) {
         throw new Error(error);
       }

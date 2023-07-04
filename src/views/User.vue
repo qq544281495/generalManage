@@ -21,14 +21,23 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="handleQuery">查询</el-button>
-        <el-button @click="handleReset">重置</el-button>
+        <el-button v-limit="'/user/query'" type="primary" @click="handleQuery"
+          >查询</el-button
+        >
+        <el-button v-limit="'/user/query'" @click="handleReset">重置</el-button>
       </el-form-item>
     </el-form>
     <div class="base-table">
       <div class="action">
-        <el-button type="primary" @click="handleCreate">新增</el-button>
-        <el-button type="danger" @click="handleBatchDelete">批量删除</el-button>
+        <el-button v-limit="'/user/create'" type="primary" @click="handleCreate"
+          >新增</el-button
+        >
+        <el-button
+          v-limit="'/user/batchRemove'"
+          type="danger"
+          @click="handleBatchDelete"
+          >批量删除</el-button
+        >
       </div>
       <el-table
         :data="userData"
@@ -47,12 +56,14 @@
         <el-table-column label="操作" width="200px">
           <template #default="scope">
             <el-button
+              v-limit="'/user/edit'"
               type="primary"
               size="small"
               @click="handleEdit(scope.row)"
               >编辑</el-button
             >
             <el-button
+              v-limit="'/user/delete'"
               type="danger"
               size="small"
               @click="handleDelete(scope.row)"

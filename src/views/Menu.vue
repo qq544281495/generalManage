@@ -13,13 +13,17 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="handleQuery">查询</el-button>
-        <el-button @click="handleReset">重置</el-button>
+        <el-button v-limit="'/menu/query'" type="primary" @click="handleQuery"
+          >查询</el-button
+        >
+        <el-button v-limit="'/menu/query'" @click="handleReset">重置</el-button>
       </el-form-item>
     </el-form>
     <div class="base-table">
       <div class="action">
-        <el-button type="primary" @click="handleCreate">新增</el-button>
+        <el-button v-limit="'/menu/create'" type="primary" @click="handleCreate"
+          >新增</el-button
+        >
       </div>
       <el-table
         :data="menuList"
@@ -37,16 +41,22 @@
         />
         <el-table-column label="操作" width="200px">
           <template #default="scope">
-            <el-button type="primary" size="small" @click="handleAdd(scope.row)"
+            <el-button
+              v-limit="'/menu/create'"
+              type="primary"
+              size="small"
+              @click="handleAdd(scope.row)"
               >新增</el-button
             >
             <el-button
+              v-limit="'/menu/edit'"
               type="primary"
               size="small"
               @click="handleEdit(scope.row)"
               >编辑</el-button
             >
             <el-button
+              v-limit="'/menu/delete'"
               type="danger"
               size="small"
               @click="handleDelete(scope.row._id)"
@@ -202,17 +212,17 @@ export default {
         {
           label: "权限标识",
           prop: "menuCode",
-          width: "120px",
+          width: "200px",
         },
         {
           label: "路由地址",
           prop: "path",
-          width: "140px",
+          width: "200px",
         },
         {
           label: "组件路径",
           prop: "component",
-          width: "140px",
+          width: "200px",
         },
         {
           label: "菜单状态",
@@ -324,6 +334,7 @@ export default {
         let { info } = await this.$api.operateMenu(params);
         this.$message.success(info);
         this.getMenuList();
+        this.getTreeList();
       } catch (error) {
         throw new Error(error);
       }
@@ -338,6 +349,7 @@ export default {
             this.$message.success(info);
             this.handleCancel();
             this.getMenuList();
+            this.getTreeList();
           } catch (error) {
             throw new Error(error);
           }

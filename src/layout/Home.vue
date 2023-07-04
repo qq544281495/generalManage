@@ -78,10 +78,12 @@ export default {
     };
   },
   methods: {
-    async getMenuList() {
+    async getPermissionList() {
       try {
-        const { list } = await this.$api.getMenuList();
+        const { list, button } = await this.$api.getPermissionList();
         this.menuList = list;
+        this.$store.commit("user/SET_USER_MENU", list);
+        this.$store.commit("user/SET_USER_BUTTON", button);
       } catch (error) {
         throw new Error(error);
       }
@@ -98,13 +100,15 @@ export default {
       this.isCollapse = !this.isCollapse;
     },
     logout() {
-      this.$store.commit("user/SET_USER_INFO", "");
+      this.$store.commit("user/SET_USER_INFO", {});
+      this.$store.commit("user/SET_USER_MENU", []);
+      this.$store.commit("user/SET_USER_BUTTON", []);
       this.$router.push({ path: "/login" });
     },
   },
   mounted() {
     this.getNoticeCount();
-    this.getMenuList();
+    this.getPermissionList();
   },
 };
 </script>

@@ -7,6 +7,10 @@ export default {
   login(data) {
     return request.post("/users/login", data);
   },
+  // 获取用户权限列表
+  getPermissionList(data) {
+    return request.get("/users/getPermissionList", data);
+  },
   // 获取用户列表
   getUserList(data) {
     return request.get("/users/list", data);

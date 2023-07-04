@@ -11,6 +11,20 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
 
 const app = createApp(App);
+// 自定义指令
+app.directive("limit", {
+  beforeMount: (el, binding) => {
+    let userButton = storage.getItem("userButton");
+    let value = binding.value;
+    let hasPermission = userButton.includes(value);
+    if (!hasPermission) {
+      el.style = "display:none";
+      setTimeout(() => {
+        el.parentNode.removeChild(el);
+      }, 0);
+    }
+  },
+});
 app.config.globalProperties.$request = request;
 app.config.globalProperties.$storage = storage;
 app.config.globalProperties.$api = api;

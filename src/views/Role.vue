@@ -6,13 +6,17 @@
         <el-input v-model="queryForm.roleName" placeholder="请输入角色名称" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="handleQuery">查询</el-button>
-        <el-button @click="handleReset">重置</el-button>
+        <el-button v-limit="'/role/query'" type="primary" @click="handleQuery"
+          >查询</el-button
+        >
+        <el-button v-limit="'/role/query'" @click="handleReset">重置</el-button>
       </el-form-item>
     </el-form>
     <div class="base-table">
       <div class="action">
-        <el-button type="primary" @click="handleCreate">创建</el-button>
+        <el-button v-limit="'/role/create'" type="primary" @click="handleCreate"
+          >新增</el-button
+        >
       </div>
       <el-table :data="roleList" height="calc(100vh - 292px)">
         <el-table-column
@@ -26,18 +30,21 @@
         <el-table-column label="操作">
           <template #default="scope">
             <el-button
+              v-limit="'/role/edit'"
               type="primary"
               size="small"
               @click="handleEdit(scope.row)"
               >编辑</el-button
             >
             <el-button
+              v-limit="'/role/permission'"
               type="primary"
               size="small"
               @click="handleOpenPrivilege(scope.row)"
               >设置权限</el-button
             >
             <el-button
+              v-limit="'/role/delete'"
               type="danger"
               size="small"
               @click="handleDelete(scope.row._id)"
