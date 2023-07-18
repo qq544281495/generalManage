@@ -19,4 +19,8 @@ export default {
   checkRatifyLeave(data) {
     return request.post("/leave/ratify/leave", data);
   },
+  // 通知数量
+  noticeCount(data) {
+    return request.get("/leave/count", data);
+  },
 };

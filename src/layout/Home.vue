@@ -28,7 +28,13 @@
         </div>
         <div>
           <!-- 消息通知 -->
-          <el-badge :is-dot="noticeCount != 0" class="bell">
+          <el-badge
+            :value="noticeCount"
+            :hidden="noticeCount == 0"
+            class="bell"
+            @click="skipRatify"
+            style="cursor: pointer"
+          >
             <el-icon size="20px"><Bell /></el-icon>
           </el-badge>
           <!-- 用户信息 -->
@@ -90,10 +96,17 @@ export default {
     },
     async getNoticeCount() {
       try {
-        const count = await this.$api.noticeCount();
-        this.noticeCount = count;
+        const { total } = await this.$api.noticeCount();
+        this.noticeCount = total;
       } catch (error) {
         throw new Error(error);
+      }
+    },
+    skipRatify() {
+      if (this.noticeCount) {
+        this.$router.push({
+          path: "/audit/ratify",
+        });
       }
     },
     toggle() {
