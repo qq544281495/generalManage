@@ -39,26 +39,23 @@
           :width="item.width ? item.width : 'auto'"
           :formatter="item.formatter"
         />
-        <el-table-column label="操作" width="200px">
+        <el-table-column label="操作" width="240px">
           <template #default="scope">
             <el-button
               v-limit="'/menu/create'"
               type="primary"
-              size="small"
               @click="handleAdd(scope.row)"
               >新增</el-button
             >
             <el-button
               v-limit="'/menu/edit'"
               type="primary"
-              size="small"
               @click="handleEdit(scope.row)"
               >编辑</el-button
             >
             <el-button
               v-limit="'/menu/delete'"
               type="danger"
-              size="small"
               @click="handleDelete(scope.row._id)"
               >删除</el-button
             >

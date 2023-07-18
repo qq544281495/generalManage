@@ -3,6 +3,7 @@ import userPort from "./user";
 import menuPort from "./menu";
 import rolePort from "./role";
 import deptPort from "./dept";
+import leavePort from "./leave";
 export default {
   // 通知数量
   noticeCount(data) {
@@ -12,4 +13,5 @@ export default {
   ...menuPort,
   ...rolePort,
   ...deptPort,
+  ...leavePort,
 };

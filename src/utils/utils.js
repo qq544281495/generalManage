@@ -52,4 +52,10 @@ export default {
     deep(list);
     return routes;
   },
+  getNowTime(date, hours) {
+    // 时间戳
+    let timestamp = new Date(date.toLocaleDateString()).getTime();
+    let nowDate = new Date(timestamp + hours * 60 * 60 * 1000);
+    return this.formateDate(nowDate);
+  },
 };

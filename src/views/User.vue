@@ -58,14 +58,12 @@
             <el-button
               v-limit="'/user/edit'"
               type="primary"
-              size="small"
               @click="handleEdit(scope.row)"
               >编辑</el-button
             >
             <el-button
               v-limit="'/user/delete'"
               type="danger"
-              size="small"
               @click="handleDelete(scope.row)"
               >删除</el-button
             >
@@ -146,7 +144,7 @@
             v-model="userForm.deptId"
             placeholder="请选择所属部门"
             :options="deptList"
-            :props="{ value: '_id', label: 'deptName' }"
+            :props="{ value: '_id', label: 'deptName', checkStrictly: true }"
             clearable
             style="width: 100%"
           >

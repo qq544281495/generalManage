@@ -32,21 +32,18 @@
             <el-button
               v-limit="'/role/edit'"
               type="primary"
-              size="small"
               @click="handleEdit(scope.row)"
               >编辑</el-button
             >
             <el-button
               v-limit="'/role/permission'"
               type="primary"
-              size="small"
               @click="handleOpenPrivilege(scope.row)"
               >设置权限</el-button
             >
             <el-button
               v-limit="'/role/delete'"
               type="danger"
-              size="small"
               @click="handleDelete(scope.row._id)"
               >删除</el-button
             >

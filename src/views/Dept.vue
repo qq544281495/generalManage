@@ -40,14 +40,12 @@
             <el-button
               v-limit="'/dept/edit'"
               type="primary"
-              size="small"
               @click="handleEdit(scope.row)"
               >编辑</el-button
             >
             <el-button
               v-limit="'/dept/delete'"
               type="danger"
-              size="small"
               @click="handleDelete(scope.row._id)"
               >删除</el-button
             >
@@ -140,7 +138,7 @@ export default {
           prop: "deptName",
         },
         {
-          lable: "负责人",
+          label: "负责人",
           prop: "userName",
         },
         {
