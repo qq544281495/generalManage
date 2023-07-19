@@ -3,7 +3,7 @@
 <h4>项目主要实现公司基础的OA工作流，部门联动、休假审批流程等功能同时动态获取账号权限保障权限安全</h4>
 <p>用户管理页面：</p>
   <p>用户管理页面用于角色创建管理等功能，同时将账号与系统角色、部门等相关联。</p>
-  ![image](https://github.com/qq544281495/generalManage/assets/64632385/7f01fa8f-2a40-4c6c-bed3-c52731bbd7b6)
+  <image src="https://github.com/qq544281495/generalManage/assets/64632385/7f01fa8f-2a40-4c6c-bed3-c52731bbd7b6"></image>
 <p>角色管理页面：</p>
   <p>角色管理页面用于创建公司对应职位的角色同时进行权限分配，保证对应职位的账号权限。</p>
 <p>部门管理页面：</p>
