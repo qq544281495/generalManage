@@ -1,4 +1,4 @@
-![image](https://github.com/qq544281495/generalManage/assets/64632385/e97f252c-1526-4da0-887f-72951d544cc4)后台通用管理系统
+后台通用管理系统
 技术栈：Vue + VueRouter + Vuex + Elementplus
 项目主要实现公司基础的OA工作流，部门联动、休假审批流程等功能同时动态获取账号权限保障权限安全
 用户管理页面：
