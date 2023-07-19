@@ -64,7 +64,6 @@ async function loadRoutes() {
     }
   }
 }
-
 await loadRoutes();
 
 // 路由前置守卫
