@@ -71,17 +71,22 @@
 <script>
 import MenuComponent from "@/components/MenuComponent.vue";
 import BreadCrumb from "@/components/BreadCrumb.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "handleBatchDeleteome",
   components: { MenuComponent, BreadCrumb },
   data() {
     return {
       isCollapse: false,
-      userInfo: this.$store.state.user.userInfo,
-      noticeCount: 0,
       menuList: [],
       activeMenu: location.hash.slice(1),
     };
+  },
+  computed: {
+    ...mapGetters({
+      userInfo: "user/GET_USER_INFO",
+      noticeCount: "user/GET_Notice_Count",
+    }),
   },
   methods: {
     async getPermissionList() {
@@ -94,18 +99,10 @@ export default {
         throw new Error(error);
       }
     },
-    async getNoticeCount() {
-      try {
-        const { total } = await this.$api.noticeCount();
-        this.noticeCount = total;
-      } catch (error) {
-        throw new Error(error);
-      }
-    },
     skipRatify() {
       if (this.noticeCount) {
         this.$router.push({
-          path: "/audit/ratify",
+          path: "/check/ratify",
         });
       }
     },
@@ -116,11 +113,11 @@ export default {
       this.$store.commit("user/SET_USER_INFO", {});
       this.$store.commit("user/SET_USER_MENU", []);
       this.$store.commit("user/SET_USER_BUTTON", []);
+      this.$store.commit("user/SET_Notice_Count", 0);
       this.$router.push({ path: "/login" });
     },
   },
   mounted() {
-    this.getNoticeCount();
     this.getPermissionList();
   },
 };

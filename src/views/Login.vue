@@ -3,13 +3,13 @@
     <div class="content">
       <el-form ref="userForm" :model="user" status-icon :rules="rules">
         <div class="title">通用后台管理系统</div>
-        <el-form-item prop="userName">
+        <el-form-item prop="userEmail">
           <el-input
             type="text"
             size="large"
             prefix-icon="User"
-            placeholder="请输入账号"
-            v-model="user.userName"
+            placeholder="请输入用户邮箱"
+            v-model="user.userEmail"
           />
         </el-form-item>
         <el-form-item prop="password">
@@ -44,14 +44,14 @@ export default {
   data() {
     return {
       user: {
-        userName: "",
+        userEmail: "",
         password: "",
       },
       rules: {
-        userName: [
+        userEmail: [
           {
             required: true,
-            message: "请输入账号",
+            message: "请输入用户邮箱",
             trigger: "blur",
           },
         ],
@@ -73,11 +73,20 @@ export default {
             let { data } = await this.$api.login(this.user);
             this.$store.commit("user/SET_USER_INFO", data);
             await this.loadRoutes();
+            await this.getNoticeCount();
             this.$router.push({ path: "/welcome" });
           } else {
             return false;
           }
         });
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    async getNoticeCount() {
+      try {
+        const { total } = await this.$api.noticeCount();
+        this.$store.commit("user/SET_Notice_Count", total);
       } catch (error) {
         throw new Error(error);
       }

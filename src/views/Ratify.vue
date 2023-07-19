@@ -256,14 +256,23 @@ export default {
           let { info } = await this.$api.checkRatifyLeave(params);
           this.$message.success(info);
           this.ratifyDialog = false;
-          this.getRatifyList();
+          await this.getRatifyList();
+          await this.getNoticeCount();
         } else {
           return false;
         }
       });
     },
+    async getNoticeCount() {
+      try {
+        const { total } = await this.$api.noticeCount();
+        console.log(total);
+        this.$store.commit("user/SET_Notice_Count", total);
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
     handleCheck(item) {
-      console.log(item);
       Object.assign(this.ratifyForm, item);
       this.ratifyDialog = true;
     },

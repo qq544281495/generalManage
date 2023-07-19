@@ -5,6 +5,7 @@ export default {
     userInfo: storage.getItem("userInfo") || {},
     userMenu: storage.getItem("userMenu") || [],
     userButton: storage.getItem("userButton") || [],
+    noticeCount: storage.getItem("noticeCount") || 0,
   }),
   getters: {
     GET_USER_INFO(state) {
@@ -15,6 +16,9 @@ export default {
     },
     GET_USER_BUTTON(state) {
       return state.userButton;
+    },
+    GET_Notice_Count(state) {
+      return state.noticeCount;
     },
   },
   mutations: {
@@ -29,6 +33,10 @@ export default {
     SET_USER_BUTTON(state, userButton) {
       state.userButton = userButton;
       storage.setItem("userButton", userButton);
+    },
+    SET_Notice_Count(state, noticeCount) {
+      state.noticeCount = noticeCount;
+      storage.setItem("noticeCount", noticeCount);
     },
   },
   actions: {},
