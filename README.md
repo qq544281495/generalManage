@@ -1,6 +1,7 @@
 <h2>后台通用管理系统</h2>
 <h4>技术栈：Vue + VueRouter + Vuex + Elementplus</h4>
 <h4>项目主要实现公司基础的OA工作流，部门联动、休假审批流程等功能同时动态获取账号权限保障权限安全</h4>
+<h4>前端项目链接：<a href="https://github.com/qq544281495/generalService">后台通用管理系统</a></h4>
 <p>用户管理页面：</p>
   <p>用户管理页面用于角色创建管理等功能，同时将账号与系统角色、部门等相关联。</p>
   <image src="https://github.com/qq544281495/generalManage/assets/64632385/7f01fa8f-2a40-4c6c-bed3-c52731bbd7b6"></image>
